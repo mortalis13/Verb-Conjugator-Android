@@ -2,7 +2,9 @@
 # Verb Conjugator
 
 ## Android Application
-![icon](english/source/res/drawable-hdpi/icon_common.png){: style="float:right"}
+<div style="border: 1px solid #333;">
+  ![icon](english/source/res/drawable-hdpi/icon_common.png)
+</div>
 
 Presents conjugation forms for a large amount of verbs.
 Several applications designed for different languages:
