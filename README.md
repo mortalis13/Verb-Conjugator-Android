@@ -2,7 +2,7 @@
 # Verb Conjugator
 
 ## Android Application
-<div style="border: 1px solid #333;">
+<div class="div-custom1" style="border: 1px solid #333;">
   <img src="english/source/res/drawable-hdpi/icon_common.png" />
 </div>
 
