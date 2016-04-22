@@ -6,6 +6,10 @@
   <img src="english/source/res/drawable-hdpi/icon_common.png" />
 </div>
 
+An [example][id] or [id]
+
+  [id]: http://yet.org/ "Some Link" class=external style="border: solid black 1px;"
+
 Presents conjugation forms for a large amount of verbs.
 Several applications designed for different languages:
 
