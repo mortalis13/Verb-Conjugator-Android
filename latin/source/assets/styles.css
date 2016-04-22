@@ -1,0 +1,104 @@
+
+table{
+  border-collapse:collapse;
+  width: 100%;
+  table-layout:fixed;
+  font-size: 110%;
+}
+td,th{
+  word-wrap: break-word;
+  border: 1px solid #777;
+  padding: 10px 5px 0 5px;
+  
+  vertical-align: top;
+  /*vertical-align: middle;*/
+  
+  /*text-align: center;*/
+}
+
+#imperative td{
+  text-align: center;
+}
+
+.impForms td{
+  vertical-align: middle;
+  text-align: center;
+  border-width: 2px;
+}
+
+.impersonal-forms-title, .tense, .mode{
+  text-align: center;
+  font-weight: 700;
+  padding-bottom: 10px;
+}
+.mode{
+  border-bottom-width: 2px;
+}
+
+.form{
+  margin-bottom: 10px;
+}
+.impForms td{
+  padding-bottom: 10px;
+}
+
+td.tense{
+  padding: 0;
+}
+.tense-wrap{
+  position: relative;
+  padding: 10px;
+}
+.tense-marker{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  border-left: 10px solid #fff;
+}
+
+
+.lat-voice{
+  text-align: center;
+  font-weight: 700;
+  padding: 10px;
+  font-size: 120%;
+  text-transform: uppercase;
+}
+
+.imperative{
+  background-color: #DEB7EF;
+}
+.table-imperative .tense-marker{
+  border-left-color: #DEB7EF;
+}
+
+
+.voice-active .indicative{
+  background-color: #F8FC50;
+}
+.voice-active .subjunctive{
+  background-color: #B4FCC6;
+}
+
+.voice-active .table-indicative .tense-marker{
+  border-left-color: #F8FC50;
+}
+.voice-active .table-subjunctive .tense-marker{
+  border-left-color: #B4FCC6;
+}
+
+
+.voice-passive .indicative{
+  background-color: #FCD650;
+}
+.voice-passive .subjunctive{
+  background-color: #C2EDA7;
+}
+
+.voice-passive .table-indicative .tense-marker{
+  border-left-color: #FCD650;
+}
+.voice-passive .table-subjunctive .tense-marker{
+  border-left-color: #C2EDA7;
+}
