@@ -3,7 +3,7 @@
 
 ## Android Application
 <div class="div-custom1" style="border: 1px solid #333;">
-  <img src="english/source/res/drawable-hdpi/icon_common.png" />
+  <img class="img-thumbnail" src="english/source/res/drawable-hdpi/icon_common.png" />
 </div>
 
 Presents conjugation forms for a large amount of verbs.
