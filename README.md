@@ -1,7 +1,7 @@
 
-# Verb Conjugator
+#Verb Conjugator
 
-## Android Application
+**Android Application**
 
 Presents conjugation forms for a large amount of verbs.
 Several applications designed for different languages:
