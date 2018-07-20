@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="org.mortalis.verbconjugator.es.MainActivity" >
+    
+    <item android:id="@+id/action_autocomplete"
+              android:title="@string/action_autocomplete"
+              android:checkable="true" />
+
+</menu>

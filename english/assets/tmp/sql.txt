@@ -1,0 +1,2 @@
+alter table verbs add column _id INTEGER;
+update verbs set _id = rowid;

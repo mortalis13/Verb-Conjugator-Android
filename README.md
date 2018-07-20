@@ -2,9 +2,6 @@
 # Verb Conjugator
 
 ## Android Application
-<div class="div-custom1" style="border: 1px solid #333;">
-  <img class="img-thumbnail" src="english/source/res/drawable-hdpi/icon_common.png" />
-</div>
 
 Presents conjugation forms for a large amount of verbs.
 Several applications designed for different languages:
@@ -16,10 +13,3 @@ Several applications designed for different languages:
   - French (6 900 verbs)
   - Latin (3 000 verbs)
 
-
-
-## Screenshots
-
-![img1](spanish/source/img/img1.png)
----
-![img2](spanish/source/img/img2.png)

@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf8>
+  <title></title>
+  
+  <style>
+    table{
+      border-collapse:collapse;
+      width: 100%;
+      table-layout:fixed;
+      font-size: 110%;
+    }
+    td,th{
+      word-wrap: break-word;
+      border:1px solid black;
+      padding: 10px 5px 0 5px;
+      vertical-align: top;
+    }
+    
+    .tense, .mode{
+      text-align: center;
+      font-weight: 700;
+      padding-bottom: 10px;
+    }
+    .mode{
+      border-bottom-width: 2px;
+    }
+    
+    .form{
+      margin-bottom: 10px;
+    }
+    .impForms td{
+      padding-bottom: 10px;
+    }
+    
+    td.tense{
+      padding: 0;
+    }
+    .tense-wrap{
+      position: relative;
+      padding: 10px;
+    }
+    .tense-marker{
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      height: 100%;
+      border-left: 10px solid #fff;
+    }
+    
+    .indicative{
+      background-color: #F8FC50;
+    }
+    .subjunctive{
+      background-color: #B4FCC6;
+    }
+    .conditional{
+      background-color: #BFE1FB;
+    }
+    .imperative{
+      background-color: #DEB7EF;
+    }
+    
+    .table-indicative .tense-marker{
+      border-left-color: #F8FC50;
+    }
+    .table-subjunctive .tense-marker{
+      border-left-color: #B4FCC6;
+    }
+    .table-conditional .tense-marker{
+      border-left-color: #BFE1FB;
+    }
+    .table-imperative .tense-marker{
+      border-left-color: #DEB7EF;
+    }
+  </style>
+  
+  <script language="javascript">
+    var currentId = 0;
+    var modeIds = ['start', 'subjunctive', 'conditional', 'imperative'];
+    
+    function incIndex(){
+      currentId++;
+      if(currentId == modeIds.length)
+        currentId = 0;
+    }
+    function decIndex(){
+      currentId--;
+      if(currentId < 0)
+        currentId = modeIds.length-1;
+    }
+    
+    // function setNextId(){
+    //   for(int i=0; i<modeIds.length; ++i){
+    //     var val = document.getElementById(modeIds[i]).getBoundingClientRect()
+    //     alert("val: " + val)
+    //     val = val.top
+    //     if(val > 0){
+    //       currentId = i;
+    //     }
+    //   }
+    // }
+    // function setPrevId(){
+    //   for(int i=modeIds.length-1; i>=0; --i){
+    //     var val = document.getElementById(modeIds[i]).getBoundingClientRect().top
+    //     if(val < 0){
+    //       currentId = i;
+    //     }
+    //   }
+    // }
+    
+    // function showAndroidToast(toast) {
+    //     Android.showToast(toast);
+    // }
+
+    
+    function bDownClick(){
+      document.getElementById('ptest').innerHTML = 'new text'
+      
+      // showAndroidToast("msg")
+      // alert('ok')
+      // setNextId();
+      
+      currentId = 1;
+      var next = document.getElementById(modeIds[currentId]);
+      next.scrollIntoView();
+    }
+    function bUpClick(){
+      setPrevId();
+      var prev = document.getElementById(modeIds[currentId]);
+      prev.scrollIntoView();
+    }
+    
+    // function bDownClick(){
+    //   incIndex();
+    //   var next = document.getElementById(modeIds[currentId]);
+    //   next.scrollIntoView();
+    // }
+    // function bUpClick(){
+    //   decIndex();
+    //   var prev = document.getElementById(modeIds[currentId]);
+    //   prev.scrollIntoView();
+    // }
+  </script>
+  
+</head>
+<body>
+  <!-- <input type="button" value="Say hello" onClick="showAndroidToast('Hello Android!')" /> -->
+  <p id="ptest">init text</p>
+  
+  <table class="impForms" id="start">
+    <tr>
+      <td>=imp0=</td>
+      <td>=imp1=</td>
+      <td>=imp2=</td>
+    </tr>
+  </table>
+  <br>
+  
+  <table class="table-indicative" id="indicative">
+    <tr><td colspan="2" class="mode indicative">Modo Indicativo</td></tr>
+    <tr>
+      <td colspan="2" class="tense">
+        <div class="tense-wrap">
+          <div class="tense-marker"></div>
+          Presente
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <div class="form">=presInd0=</div>
+        <div class="form">=presInd1=</div>
+        <div class="form">=presInd2=</div>
+      </td>
+      <td>
+        <div class="form">=presInd3=</div>
+        <div class="form">=presInd4=</div>
+        <div class="form">=presInd5=</div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td colspan="2" class="tense">
+        <div class="tense-wrap">
+          <div class="tense-marker"></div>
+          Pretérito imperfecto
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <div class="form">=pretImpInd0=</div>
+        <div class="form">=pretImpInd1=</div>
+        <div class="form">=pretImpInd2=</div>
+      </td>
+      <td>
+        <div class="form">=pretImpInd3=</div>
+        <div class="form">=pretImpInd4=</div>
+        <div class="form">=pretImpInd5=</div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td colspan="2" class="tense">
+        <div class="tense-wrap">
+          <div class="tense-marker"></div>
+          Pretérito perfecto simple
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <div class="form">=pretPerfSimpInd0=</div>
+        <div class="form">=pretPerfSimpInd1=</div>
+        <div class="form">=pretPerfSimpInd2=</div>
+      </td>
+      <td>
+        <div class="form">=pretPerfSimpInd3=</div>
+        <div class="form">=pretPerfSimpInd4=</div>
+        <div class="form">=pretPerfSimpInd5=</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2" class="tense">
+        <div class="tense-wrap">
+          <div class="tense-marker"></div>
+          Futuro
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <div class="form">=futInd0=</div>
+        <div class="form">=futInd1=</div>
+        <div class="form">=futInd2=</div>
+      </td>
+      <td>
+        <div class="form">=futInd3=</div>
+        <div class="form">=futInd4=</div>
+        <div class="form">=futInd5=</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2" class="tense">
+        <div class="tense-wrap">
+          <div class="tense-marker"></div>
+          Pretérito perfecto compuesto
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <div class="form">=pretPerfCompInd0=</div>
+        <div class="form">=pretPerfCompInd1=</div>
+        <div class="form">=pretPerfCompInd2=</div>
+      </td>
+      <td>
+        <div class="form">=pretPerfCompInd3=</div>
+        <div class="form">=pretPerfCompInd4=</div>
+        <div class="form">=pretPerfCompInd5=</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2" class="tense">
+        <div class="tense-wrap">
+          <div class="tense-marker"></div>
+          Pretérito pluscuamperfecto
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <div class="form">=pretPluInd0=</div>
+        <div class="form">=pretPluInd1=</div>
+        <div class="form">=pretPluInd2=</div>
+      </td>
+      <td>
+        <div class="form">=pretPluInd3=</div>
+        <div class="form">=pretPluInd4=</div>
+        <div class="form">=pretPluInd5=</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2" class="tense">
+        <div class="tense-wrap">
+          <div class="tense-marker"></div>
+          Pretérito anterior
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <div class="form">=pretPrevInd0=</div>
+        <div class="form">=pretPrevInd1=</div>
+        <div class="form">=pretPrevInd2=</div>
+      </td>
+      <td>
+        <div class="form">=pretPrevInd3=</div>
+        <div class="form">=pretPrevInd4=</div>
+        <div class="form">=pretPrevInd5=</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2" class="tense">
+        <div class="tense-wrap">
+          <div class="tense-marker"></div>
+          Futuro perfecto
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <div class="form">=futPerfInd0=</div>
+        <div class="form">=futPerfInd1=</div>
+        <div class="form">=futPerfInd2=</div>
+      </td>
+      <td>
+        <div class="form">=futPerfInd3=</div>
+        <div class="form">=futPerfInd4=</div>
+        <div class="form">=futPerfInd5=</div>
+      </td>
+    </tr>
+    
+  </table>
+  <br>
+  
+  
+  <!-- ============================================================================= -->
+  
+  
+  <table class="table-subjunctive" id="subjunctive">
+    <tr><td colspan="2" class="mode subjunctive">Modo Subjuntivo</td></tr>
+    <tr>
+      <td colspan="2" class="tense">
+        <div class="tense-wrap">
+          <div class="tense-marker"></div>
+          Presente
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <div class="form">=presSubj0=</div>
+        <div class="form">=presSubj1=</div>
+        <div class="form">=presSubj2=</div>
+      </td>
+      <td>
+        <div class="form">=presSubj3=</div>
+        <div class="form">=presSubj4=</div>
+        <div class="form">=presSubj5=</div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td colspan="2" class="tense">
+        <div class="tense-wrap">
+          <div class="tense-marker"></div>
+          Pretérito imperfecto
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <div class="form">=pretImpSubj0=</div>
+        <div class="form">=pretImpSubj1=</div>
+        <div class="form">=pretImpSubj2=</div>
+      </td>
+      <td>
+        <div class="form">=pretImpSubj3=</div>
+        <div class="form">=pretImpSubj4=</div>
+        <div class="form">=pretImpSubj5=</div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="form">=pretImpSubj6=</div>
+        <div class="form">=pretImpSubj7=</div>
+        <div class="form">=pretImpSubj8=</div>
+      </td>
+      <td>
+        <div class="form">=pretImpSubj9=</div>
+        <div class="form">=pretImpSubj10=</div>
+        <div class="form">=pretImpSubj11=</div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td colspan="2" class="tense">
+        <div class="tense-wrap">
+          <div class="tense-marker"></div>
+          Futuro
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <div class="form">=futSubj0=</div>
+        <div class="form">=futSubj1=</div>
+        <div class="form">=futSubj2=</div>
+      </td>
+      <td>
+        <div class="form">=futSubj3=</div>
+        <div class="form">=futSubj4=</div>
+        <div class="form">=futSubj5=</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2" class="tense">
+        <div class="tense-wrap">
+          <div class="tense-marker"></div>
+          Pretérito perfecto
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <div class="form">=pretPerfSubj0=</div>
+        <div class="form">=pretPerfSubj1=</div>
+        <div class="form">=pretPerfSubj2=</div>
+      </td>
+      <td>
+        <div class="form">=pretPerfSubj3=</div>
+        <div class="form">=pretPerfSubj4=</div>
+        <div class="form">=pretPerfSubj5=</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2" class="tense">
+        <div class="tense-wrap">
+          <div class="tense-marker"></div>
+          Pretérito pluscuamperfecto
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <div class="form">=pretPluSubj0=</div>
+        <div class="form">=pretPluSubj1=</div>
+        <div class="form">=pretPluSubj2=</div>
+      </td>
+      <td>
+        <div class="form">=pretPluSubj3=</div>
+        <div class="form">=pretPluSubj4=</div>
+        <div class="form">=pretPluSubj5=</div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="form">=pretPluSubj6=</div>
+        <div class="form">=pretPluSubj7=</div>
+        <div class="form">=pretPluSubj8=</div>
+      </td>
+      <td>
+        <div class="form">=pretPluSubj9=</div>
+        <div class="form">=pretPluSubj10=</div>
+        <div class="form">=pretPluSubj11=</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2" class="tense">
+        <div class="tense-wrap">
+          <div class="tense-marker"></div>
+          Futuro perfecto
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <div class="form">=futPerfSubj0=</div>
+        <div class="form">=futPerfSubj1=</div>
+        <div class="form">=futPerfSubj2=</div>
+      </td>
+      <td>
+        <div class="form">=futPerfSubj3=</div>
+        <div class="form">=futPerfSubj4=</div>
+        <div class="form">=futPerfSubj5=</div>
+      </td>
+    </tr>
+    
+  </table>
+  <br>
+  
+  
+  <!-- ============================================================================= -->
+  
+  
+  <table class="table-conditional" id="conditional">
+    <tr><td colspan="2" class="mode conditional">Modo Condicional</td></tr>
+    <tr>
+      <td colspan="2" class="tense">
+        <div class="tense-wrap">
+          <div class="tense-marker"></div>
+          Condicional
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <div class="form">=condSimp0=</div>
+        <div class="form">=condSimp1=</div>
+        <div class="form">=condSimp2=</div>
+      </td>
+      <td>
+        <div class="form">=condSimp3=</div>
+        <div class="form">=condSimp4=</div>
+        <div class="form">=condSimp5=</div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td colspan="2" class="tense">
+        <div class="tense-wrap">
+          <div class="tense-marker"></div>
+          Condicional compuesto
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <div class="form">=condComp0=</div>
+        <div class="form">=condComp1=</div>
+        <div class="form">=condComp2=</div>
+      </td>
+      <td>
+        <div class="form">=condComp3=</div>
+        <div class="form">=condComp4=</div>
+        <div class="form">=condComp5=</div>
+      </td>
+    </tr>
+  </table>
+  <br>
+  
+  
+  <!-- ============================================================================= -->
+  
+  
+  <table class="table-imperative" id="imperative">
+    <tr><td colspan="2" class="mode imperative">Modo Imperativo</td></tr>
+    <tr>
+      <td colspan="2" class="tense">
+        <div class="tense-wrap">
+          <div class="tense-marker"></div>
+          Imperativo
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <div class="form">=imper0=</div>
+        <div class="form">=imper1=</div>
+        <div class="form">=imper2=</div>
+      </td>
+      <td>
+        <div class="form">=imper3=</div>
+        <div class="form">=imper4=</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2" class="tense">
+        <div class="tense-wrap">
+          <div class="tense-marker"></div>
+          Imperativo Negativo
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <div class="form">=imperNeg0=</div>
+        <div class="form">=imperNeg1=</div>
+        <div class="form">=imperNeg2=</div>
+      </td>
+      <td>
+        <div class="form">=imperNeg3=</div>
+        <div class="form">=imperNeg4=</div>
+      </td>
+    </tr>
+  </table>
+  
+</body>
+</html>
