@@ -1,9 +1,8 @@
 
-#Verb Conjugator
-
-**Android Application**
+# Verb Conjugator
 
 Presents conjugation forms for a large amount of verbs.
+
 Several applications designed for different languages:
 
   - Spanish (11 800 verbs)
@@ -12,4 +11,3 @@ Several applications designed for different languages:
   - Italian (7 700 verbs)
   - French (6 900 verbs)
   - Latin (3 000 verbs)
-
