@@ -2,34 +2,34 @@ package org.mortalis.verbconjugator.la;
 
 public class VerbItem {
 
-  String verb;
-  String lookupWord;
+  public String verb;
+  public String lookupWord;
 
-  String impersonalActive;
-  String presentIndicativeActive;
-  String imperfectIndicativeActive;
-  String future1IndicativeActive;
-  String perfectIndicativeActive;
-  String pluperfectIndicativeActive;
-  String future2IndicativeActive;
-  String presentConjunctiveActive;
+  public String impersonalActive;
+  public String presentIndicativeActive;
+  public String imperfectIndicativeActive;
+  public String future1IndicativeActive;
+  public String perfectIndicativeActive;
+  public String pluperfectIndicativeActive;
+  public String future2IndicativeActive;
+  public String presentConjunctiveActive;
 
-  String imperfectConjunctiveActive;
-  String perfectConjunctiveActive;
-  String pluperfectConjunctiveActive;
-  String impersonalPassive;
-  String presentIndicativePassive;
-  String imperfectIndicativePassive;
-  String future1IndicativePassive;
-  String perfectIndicativePassive;
-  String pluperfectIndicativePassive;
-  String future2IndicativePassive;
-  String presentConjunctivePassive;
-  String imperfectConjunctivePassive;
-  String perfectConjunctivePassive;
-  String pluperfectConjunctivePassive;
-  String imperativeI;
-  String imperativeII;
-  String similarVerbs;
+  public String imperfectConjunctiveActive;
+  public String perfectConjunctiveActive;
+  public String pluperfectConjunctiveActive;
+  public String impersonalPassive;
+  public String presentIndicativePassive;
+  public String imperfectIndicativePassive;
+  public String future1IndicativePassive;
+  public String perfectIndicativePassive;
+  public String pluperfectIndicativePassive;
+  public String future2IndicativePassive;
+  public String presentConjunctivePassive;
+  public String imperfectConjunctivePassive;
+  public String perfectConjunctivePassive;
+  public String pluperfectConjunctivePassive;
+  public String imperativeI;
+  public String imperativeII;
+  public String similarVerbs;
 
 }

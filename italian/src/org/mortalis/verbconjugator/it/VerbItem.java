@@ -2,25 +2,25 @@ package org.mortalis.verbconjugator.it;
 
 public class VerbItem {
 
-  String verb;
-  String impersonalForms;
+  public String verb;
+  public String impersonalForms;
 
-  String presentIndicative;
-  String imperfectIndicative;
-  String futureIndicative;
-  String pastRemoteIndicative;
-  String pastIndicative;
-  String pluperfectIndicative;
-  String futurePerfectIndicative;
-  String pluperfectRemoteIndicative;
+  public String presentIndicative;
+  public String imperfectIndicative;
+  public String futureIndicative;
+  public String pastRemoteIndicative;
+  public String pastIndicative;
+  public String pluperfectIndicative;
+  public String futurePerfectIndicative;
+  public String pluperfectRemoteIndicative;
 
-  String presentSubjunctive;
-  String imperfectSubjunctive;
-  String pastSubjunctive;
-  String pluperfectSubjunctive;
-  String presentConditional;
-  String pastConditional;
-  String imperative;
-  String similarVerbs;
+  public String presentSubjunctive;
+  public String imperfectSubjunctive;
+  public String pastSubjunctive;
+  public String pluperfectSubjunctive;
+  public String presentConditional;
+  public String pastConditional;
+  public String imperative;
+  public String similarVerbs;
 
 }

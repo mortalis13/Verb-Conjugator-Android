@@ -1,69 +1,81 @@
 
 package org.mortalis.verbconjugator.de;
 
+import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.provider.ContactsContract.Contacts;
 
-import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
-
-public class DatabaseManager extends SQLiteAssetHelper  {
+public class DatabaseManager extends SQLiteAssetHelper {
   
-    SQLiteDatabase db;
+  private static final String DATABASE_NAME = "verbs_de.db";
   
-    public DatabaseManager(Context context) {
-        super(context, "verbs_de.db", null, 1);
-        db = this.getReadableDatabase();
+  private static final String VERBS_TABLE_NAME = "verbs";
+  
+  private static final String VERBS_COL_VERB = "verb";
+  private static final String VERBS_COL_IMPERSONAL_FORMS = "impersonalForms";
+  private static final String VERBS_COL_PRESENT_INDICATIVE = "presentIndicative";
+  private static final String VERBS_COL_PRETERIT_INDICATIVE = "preteritIndicative";
+  private static final String VERBS_COL_FUTURE_INDICATIVE = "futureIndicative";
+  private static final String VERBS_COL_PERFECT_INDICATIVE = "perfectIndicative";
+  private static final String VERBS_COL_PLUPERFECT_INDICATIVE = "pluperfectIndicative";
+  private static final String VERBS_COL_FUTURE_PERFECT_INDICATIVE = "futurePerfectIndicative";
+  private static final String VERBS_COL_PRESENT_SUBJUNCTIVE = "presentSubjunctive";
+  private static final String VERBS_COL_PRETERIT_SUBJUNCTIVE = "preteritSubjunctive";
+  private static final String VERBS_COL_PERFECT_SUBJUNCTIVE = "perfectSubjunctive";
+  private static final String VERBS_COL_PLUPERFECT_SUBJUNCTIVE = "pluperfectSubjunctive";
+  private static final String VERBS_COL_PRESENT_CONDITIONAL = "presentConditional";
+  private static final String VERBS_COL_PERFECT_CONDITIONAL = "perfectConditional";
+  private static final String VERBS_COL_IMPERATIVE = "imperative";
+  private static final String VERBS_COL_SIMILAR_VERBS = "similarVerbs";
+  
+  private SQLiteDatabase db;
+  
+  
+  public DatabaseManager(Context context) {
+    super(context, DATABASE_NAME, null, 1);
+    db = this.getReadableDatabase();
+  }
+  
+  
+  public Cursor getVerbsCursor(CharSequence text) {
+    if (text == null) return null;
+    String sql = String.format("SELECT rowid _id, %s FROM %s WHERE %s LIKE '?%'", VERBS_COL_VERB, VERBS_TABLE_NAME, VERBS_COL_VERB);
+    Cursor cursor = db.rawQuery(sql, new String[] {text.toString()});
+    return cursor;
+  }
+  
+  public VerbItem getVerbItem(String verb) {
+    Cursor cursor = db.query(VERBS_TABLE_NAME, null, VERBS_COL_VERB + "=?", new String[] {verb}, null, null, null);
+    
+    if (cursor != null && cursor.getCount() != 0) {
+      cursor.moveToFirst();
+      VerbItem item = new VerbItem();
+      
+      item.verb = cursor.getString(cursor.getColumnIndex(VERBS_COL_VERB));
+      item.impersonalForms = cursor.getString(cursor.getColumnIndex(VERBS_COL_IMPERSONAL_FORMS));
+      
+      item.presentIndicative = cursor.getString(cursor.getColumnIndex(VERBS_COL_PRESENT_INDICATIVE));
+      item.preteritIndicative = cursor.getString(cursor.getColumnIndex(VERBS_COL_PRETERIT_INDICATIVE));
+      item.futureIndicative = cursor.getString(cursor.getColumnIndex(VERBS_COL_FUTURE_INDICATIVE));
+      item.perfectIndicative = cursor.getString(cursor.getColumnIndex(VERBS_COL_PERFECT_INDICATIVE));
+      item.pluperfectIndicative = cursor.getString(cursor.getColumnIndex(VERBS_COL_PLUPERFECT_INDICATIVE));
+      item.futurePerfectIndicative = cursor.getString(cursor.getColumnIndex(VERBS_COL_FUTURE_PERFECT_INDICATIVE));
+      item.presentSubjunctive = cursor.getString(cursor.getColumnIndex(VERBS_COL_PRESENT_SUBJUNCTIVE));
+      item.preteritSubjunctive = cursor.getString(cursor.getColumnIndex(VERBS_COL_PRETERIT_SUBJUNCTIVE));
+      
+      item.perfectSubjunctive = cursor.getString(cursor.getColumnIndex(VERBS_COL_PERFECT_SUBJUNCTIVE));
+      item.pluperfectSubjunctive = cursor.getString(cursor.getColumnIndex(VERBS_COL_PLUPERFECT_SUBJUNCTIVE));
+      item.presentConditional = cursor.getString(cursor.getColumnIndex(VERBS_COL_PRESENT_CONDITIONAL));
+      item.perfectConditional = cursor.getString(cursor.getColumnIndex(VERBS_COL_PERFECT_CONDITIONAL));
+      item.imperative = cursor.getString(cursor.getColumnIndex(VERBS_COL_IMPERATIVE));
+      item.similarVerbs = cursor.getString(cursor.getColumnIndex(VERBS_COL_SIMILAR_VERBS));
+      
+      return item;
     }
     
-    
-    Cursor getVerbsCursor(CharSequence str) {
-      if(str == null) return null;
-      
-//      String[] columns = {"rowid _id", "verb"};
-//      Cursor cursor = db.query("verbs", columns, null, null, null, null, null, null);
-      
-      Cursor cursor =  db.rawQuery( "select rowid _id,verb from verbs where verb like '" + str + "%'", null );
-//      Cursor cursor =  db.rawQuery( "select rowid _id,verb from verbs", null );
-//      Cursor cursor =  db.rawQuery( "select verb from verbs", null );
-      
-//      String x = Contacts._ID;
-      
-      return cursor;
-    }
-    
-    VerbItem getVerbItem(String verb) {
-        Cursor cursor = db.query("verbs", null, 
-                "verb='" + verb + "'", null,
-                null, null, null, null);
-        
-        if (cursor != null && cursor.getCount() != 0) {
-            cursor.moveToFirst();
-            VerbItem item = new VerbItem();
-            
-            item.verb = verb;
-            item.impersonalForms = cursor.getString(1);
-            
-            item.presentIndicative = cursor.getString(2);
-            item.preteritIndicative = cursor.getString(3);
-            item.futureIndicative = cursor.getString(4);
-            item.perfectIndicative = cursor.getString(5);
-            item.pluperfectIndicative = cursor.getString(6);
-            item.futurePerfectIndicative = cursor.getString(7);
-            item.presentSubjunctive = cursor.getString(8);
-            item.preteritSubjunctive = cursor.getString(9);
-            
-            item.perfectSubjunctive = cursor.getString(10);
-            item.pluperfectSubjunctive = cursor.getString(11);
-            item.presentConditional = cursor.getString(12);
-            item.perfectConditional = cursor.getString(13);
-            item.imperative = cursor.getString(14);
-            item.similarVerbs = cursor.getString(14);
-
-            return item;
-        }
-        
-        return null;
-    }
+    return null;
+  }
+  
 }

@@ -2,23 +2,23 @@ package org.mortalis.verbconjugator.de;
 
 public class VerbItem {
 
-  String verb;
-  String impersonalForms;
+  public String verb;
+  public String impersonalForms;
 
-  String presentIndicative;
-  String preteritIndicative;
-  String futureIndicative;
-  String perfectIndicative;
-  String pluperfectIndicative;
-  String futurePerfectIndicative;
-  String presentSubjunctive;
-  String preteritSubjunctive;
+  public String presentIndicative;
+  public String preteritIndicative;
+  public String futureIndicative;
+  public String perfectIndicative;
+  public String pluperfectIndicative;
+  public String futurePerfectIndicative;
+  public String presentSubjunctive;
+  public String preteritSubjunctive;
 
-  String perfectSubjunctive;
-  String pluperfectSubjunctive;
-  String presentConditional;
-  String perfectConditional;
-  String imperative;
-  String similarVerbs;
+  public String perfectSubjunctive;
+  public String pluperfectSubjunctive;
+  public String presentConditional;
+  public String perfectConditional;
+  public String imperative;
+  public String similarVerbs;
 
 }

@@ -43,25 +43,24 @@ import android.widget.Toast;
 @SuppressLint("NewApi")
 public class MainActivity extends Activity {
   
-  DatabaseManager db;
-  SimpleCursorAdapter cursorAdapter;
-  Filter mFilter;
+  private DatabaseManager db;
+  private SimpleCursorAdapter cursorAdapter;
+  private Filter mFilter;
   
-  boolean textInnerChange;
-  boolean useAutocomplete;
+  private EditText etWord;
   
-  EditText etWord;
-//  AutoCompleteTextView etWord;
+  private ImageButton bDown;
+  private ImageButton bUp;
   
-  ImageButton bDown;
-  ImageButton bUp;
+  private WebView wvContent;
+  private ListView lvWords;
   
-  WebView wvContent;
-  ListView lvWords;
+  private FrameLayout loContent;
   
-  FrameLayout loContent;
+  private boolean textInnerChange;
+  private boolean useAutocomplete;
   
-
+  
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -76,12 +75,12 @@ public class MainActivity extends Activity {
     getMenuInflater().inflate(R.menu.main, menu);
     return true;
   }
-
+  
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     int id = item.getItemId();
     
-    switch(id){
+    switch (id) {
     case R.id.action_autocomplete:
       toggleAutocomplete(item);
       return true;
@@ -93,10 +92,10 @@ public class MainActivity extends Activity {
   
 //----------------------------------------------- Actions -----------------------------------------------
   
-  void init(){
+  private void init() {
     db = new DatabaseManager(this);
-     
-    textInnerChange = false; 
+    
+    textInnerChange = false;
     useAutocomplete = false;
     
     loContent = (FrameLayout) findViewById(R.id.loContent);
@@ -108,7 +107,7 @@ public class MainActivity extends Activity {
     bUp = (ImageButton) findViewById(R.id.bUp);
     wvContent = (WebView) findViewById(R.id.wvContent);
     
-
+    
     WebSettings mWebSettings = wvContent.getSettings();
     mWebSettings.setJavaScriptEnabled(true);
     wvContent.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
@@ -123,8 +122,7 @@ public class MainActivity extends Activity {
     wvContent.addJavascriptInterface(new WebAppInterface(this), "Android");
     
     
-    cursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, null, 
-        new String[]{"verb"}, new int[]{android.R.id.text1}, 0);
+    cursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, null, new String[] { "verb" }, new int[] { android.R.id.text1 }, 0);
     lvWords.setAdapter(cursorAdapter);
     lvWords.setBackgroundColor(Color.WHITE);
     
@@ -137,57 +135,40 @@ public class MainActivity extends Activity {
     mFilter = cursorAdapter.getFilter();
   }
   
-  void setActions(){
+  private void setActions() {
     etWord.setOnFocusChangeListener(new OnFocusChangeListener() {
-      @Override
       public void onFocusChange(View v, boolean hasFocus) {
-        if(hasFocus){
-          System.out.println("etWord-focus");
+        if (hasFocus) {
           showList();
         }
       }
-    }); 
+    });
     
     etWord.setOnEditorActionListener(new OnEditorActionListener() {
-      @Override
       public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        if( actionId == EditorInfo.IME_ACTION_SEARCH || 
-            (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER 
-            && event.getAction() == KeyEvent.ACTION_DOWN) )
-        {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN)) {
           acSearch();
-          // return true;
         }
         
         return true;
-        // return false;
       }
     });
     
     
     etWord.addTextChangedListener(new TextWatcher() {
-      @Override
       public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if(!useAutocomplete) return;
-        if(textInnerChange) return;
+        if (!useAutocomplete) return;
+        if (textInnerChange) return;
         
-        System.out.println("onTextChanged");
-        
-        if(s.length() < 3){
+        if (s.length() < 3) {
           clearList();
           return;
         }
         
         mFilter.filter(s);
-        
-        // Cursor cursor = db.getVerbsCursor(s);
-        // cursorAdapter.changeCursor(cursor);
-        // cursorAdapter.notifyDataSetChanged();
       }
       
-      @Override
       public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-      @Override
       public void afterTextChanged(Editable s) {}
     });
     
@@ -197,9 +178,8 @@ public class MainActivity extends Activity {
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Cursor itemCursor = (Cursor) parent.getItemAtPosition(position);
         String verb = itemCursor.getString(1);
-        System.out.println("verb-list: " + verb);
         
-        if(verb.length() == 0) return;
+        if (verb.length() == 0) return;
         
         textInnerChange = true;
         etWord.setText(verb);
@@ -215,7 +195,7 @@ public class MainActivity extends Activity {
       public void onClick(View v) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
           wvContent.evaluateJavascript("bDownClick();", null);
-        } 
+        }
         else {
           wvContent.loadUrl("javascript:bDownClick();");
         }
@@ -227,7 +207,7 @@ public class MainActivity extends Activity {
       public void onClick(View v) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
           wvContent.evaluateJavascript("bUpClick();", null);
-        } 
+        }
         else {
           wvContent.loadUrl("javascript:bUpClick();");
         }
@@ -238,30 +218,23 @@ public class MainActivity extends Activity {
   
 //----------------------------------------------- Handlers -----------------------------------------------
   
-  void acSearch(){
+  private void acSearch() {
     String verb = etWord.getText().toString();
-    System.out.println("verb: " + verb);
-
-    // if(verb.length() == 0)
-    //   verb = "abalizar";
-    
     searchVerb(verb);
   }
   
-  void searchVerb(String verb){
+  private void searchVerb(String verb) {
     new SearchVerbTask().execute(verb);
   }
   
-  void toggleAutocomplete(MenuItem menuItem){
-    if (menuItem.isChecked()){
-      System.out.println("toggling-off");
+  private void toggleAutocomplete(MenuItem menuItem) {
+    if (menuItem.isChecked()) {
       menuItem.setChecked(false);
       
       useAutocomplete = false;
       clearList();
     }
-    else{
-      System.out.println("toggling-on");
+    else {
       menuItem.setChecked(true);
       
       useAutocomplete = true;
@@ -270,20 +243,16 @@ public class MainActivity extends Activity {
   
   
   private class SearchVerbTask extends AsyncTask<String, Void, String> {
-    
-    @Override
     protected String doInBackground(String... args) {
       return process(args[0]);
     }
-
-    @Override
+    
     protected void onPreExecute() {
       wvContent.loadUrl("about:blank");
     }
     
-    @Override
     protected void onPostExecute(String result) {
-      if(result == null){
+      if (result == null) {
         toast("Verb not found");
         return;
       }
@@ -295,11 +264,11 @@ public class MainActivity extends Activity {
       // wvContent.loadData(result, "text/html; charset=UTF-8", null);
       loContent.requestFocus();
     }
-
+    
     
     private String process(String verb) {
       VerbItem verbItem = db.getVerbItem(verb);
-      if(verbItem == null) return null;
+      if (verbItem == null) return null;
       
       String html = "";
       AssetManager assetManager = getApplicationContext().getResources().getAssets();
@@ -310,9 +279,9 @@ public class MainActivity extends Activity {
         inputStream.read(b);
         html = new String(b);
         inputStream.close();
-      } 
+      }
       catch (IOException e) {
-        Log.e("mytag", "Couldn't open tmpl.html", e);
+        Log.e("verb_conjugator", "Couldn't open tmpl.html", e);
       }
       
       StringBuilder sb = new StringBuilder(html);
@@ -322,111 +291,110 @@ public class MainActivity extends Activity {
       String[] list;
       
       list = verbItem.impersonalForms.split(",");
-      for(int i=0; i<list.length; ++i){
-        replStr = "=imp"+i+"=";
+      for (int i = 0; i < list.length; ++i) {
+        replStr = "=imp" + i + "=";
         len = replStr.length();
         pos = sb.indexOf(replStr);
-        sb.replace(pos, pos+len, list[i]);
+        sb.replace(pos, pos + len, list[i]);
       }
-
+      
       list = verbItem.presentIndicative.split(",");
-      for(int i=0; i<list.length; ++i){
-        replStr = "=presInd"+i+"=";
+      for (int i = 0; i < list.length; ++i) {
+        replStr = "=presInd" + i + "=";
         len = replStr.length();
         pos = sb.indexOf(replStr);
-        sb.replace(pos, pos+len, list[i]);
+        sb.replace(pos, pos + len, list[i]);
       }
       list = verbItem.preteritIndicative.split(",");
-      for(int i=0; i<list.length; ++i){
-        replStr = "=pretInd"+i+"=";
+      for (int i = 0; i < list.length; ++i) {
+        replStr = "=pretInd" + i + "=";
         len = replStr.length();
         pos = sb.indexOf(replStr);
-        sb.replace(pos, pos+len, list[i]);
+        sb.replace(pos, pos + len, list[i]);
       }
       list = verbItem.futureIndicative.split(",");
-      for(int i=0; i<list.length; ++i){
-        replStr = "=futInd"+i+"=";
+      for (int i = 0; i < list.length; ++i) {
+        replStr = "=futInd" + i + "=";
         len = replStr.length();
         pos = sb.indexOf(replStr);
-        sb.replace(pos, pos+len, list[i]);
+        sb.replace(pos, pos + len, list[i]);
       }
       list = verbItem.perfectIndicative.split(",");
-      for(int i=0; i<list.length; ++i){
-        replStr = "=perfInd"+i+"=";
+      for (int i = 0; i < list.length; ++i) {
+        replStr = "=perfInd" + i + "=";
         len = replStr.length();
         pos = sb.indexOf(replStr);
-        sb.replace(pos, pos+len, list[i]);
+        sb.replace(pos, pos + len, list[i]);
       }
       list = verbItem.pluperfectIndicative.split(",");
-      for(int i=0; i<list.length; ++i){
-        replStr = "=pluperfInd"+i+"=";
+      for (int i = 0; i < list.length; ++i) {
+        replStr = "=pluperfInd" + i + "=";
         len = replStr.length();
         pos = sb.indexOf(replStr);
-        sb.replace(pos, pos+len, list[i]);
+        sb.replace(pos, pos + len, list[i]);
       }
       list = verbItem.futurePerfectIndicative.split(",");
-      for(int i=0; i<list.length; ++i){
-        replStr = "=futPerfInd"+i+"=";
+      for (int i = 0; i < list.length; ++i) {
+        replStr = "=futPerfInd" + i + "=";
         len = replStr.length();
         pos = sb.indexOf(replStr);
-        sb.replace(pos, pos+len, list[i]);
+        sb.replace(pos, pos + len, list[i]);
       }
-
+      
       list = verbItem.presentSubjunctive.split(",");
-      for(int i=0; i<list.length; ++i){
-        replStr = "=presSubj"+i+"=";
+      for (int i = 0; i < list.length; ++i) {
+        replStr = "=presSubj" + i + "=";
         len = replStr.length();
         pos = sb.indexOf(replStr);
-        sb.replace(pos, pos+len, list[i]);
+        sb.replace(pos, pos + len, list[i]);
       }
       list = verbItem.preteritSubjunctive.split(",");
-      for(int i=0; i<list.length; ++i){
-        replStr = "=pretSubj"+i+"=";
+      for (int i = 0; i < list.length; ++i) {
+        replStr = "=pretSubj" + i + "=";
         len = replStr.length();
         pos = sb.indexOf(replStr);
-        sb.replace(pos, pos+len, list[i]);
+        sb.replace(pos, pos + len, list[i]);
       }
-
+      
       list = verbItem.perfectSubjunctive.split(",");
-      for(int i=0; i<list.length; ++i){
-        replStr = "=perfSubj"+i+"=";
+      for (int i = 0; i < list.length; ++i) {
+        replStr = "=perfSubj" + i + "=";
         len = replStr.length();
         pos = sb.indexOf(replStr);
-        sb.replace(pos, pos+len, list[i]);
+        sb.replace(pos, pos + len, list[i]);
       }
       list = verbItem.pluperfectSubjunctive.split(",");
-      for(int i=0; i<list.length; ++i){
-        replStr = "=pluperfSubj"+i+"=";
+      for (int i = 0; i < list.length; ++i) {
+        replStr = "=pluperfSubj" + i + "=";
         len = replStr.length();
         pos = sb.indexOf(replStr);
-        sb.replace(pos, pos+len, list[i]);
+        sb.replace(pos, pos + len, list[i]);
       }
-
+      
       list = verbItem.presentConditional.split(",");
-      for(int i=0; i<list.length; ++i){
-        replStr = "=presCond"+i+"=";
+      for (int i = 0; i < list.length; ++i) {
+        replStr = "=presCond" + i + "=";
         len = replStr.length();
         pos = sb.indexOf(replStr);
-        sb.replace(pos, pos+len, list[i]);
+        sb.replace(pos, pos + len, list[i]);
       }
       list = verbItem.perfectConditional.split(",");
-      for(int i=0; i<list.length; ++i){
-        replStr = "=perfCond"+i+"=";
+      for (int i = 0; i < list.length; ++i) {
+        replStr = "=perfCond" + i + "=";
         len = replStr.length();
         pos = sb.indexOf(replStr);
-        sb.replace(pos, pos+len, list[i]);
+        sb.replace(pos, pos + len, list[i]);
       }
       
       int imperativeCount = 5;
       list = verbItem.imperative.split(",");
-      for(int i=0; i<imperativeCount; ++i){
-        replStr = "=imper"+i+"=";
+      for (int i = 0; i < imperativeCount; ++i) {
+        replStr = "=imper" + i + "=";
         len = replStr.length();
         pos = sb.indexOf(replStr);
-        if(i < list.length)
-          sb.replace(pos, pos+len, list[i]);
-        else
-          sb.replace(pos, pos+len, "");
+        if (i < list.length)
+          sb.replace(pos, pos + len, list[i]);
+        else sb.replace(pos, pos + len, "");
       }
       
       list = null;
@@ -435,40 +403,36 @@ public class MainActivity extends Activity {
       
       return sb.toString();
     }
-
+    
   }
   
   
 //----------------------------------------------- UI -----------------------------------------------
   
-  public void hideKeyboard(){
-    InputMethodManager imm =(InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE);
+  public void hideKeyboard() {
+    InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
     imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-    // imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
   }
   
-  void hideList(){
-    if(!useAutocomplete) return;
-    System.out.println("hiding-list");
-    // lvWords.setVisibility(View.GONE);
+  private void hideList() {
+    if (!useAutocomplete) return;
     lvWords.setVisibility(View.INVISIBLE);
   }
   
-  void showList(){
-    if(!useAutocomplete) return;
-    System.out.println("showing-list");
+  private void showList() {
+    if (!useAutocomplete) return;
     lvWords.setVisibility(View.VISIBLE);
   }
   
-  void clearList(){
+  private void clearList() {
     cursorAdapter.changeCursor(null);
     cursorAdapter.notifyDataSetChanged();
-  }   
+  }
   
   
 //----------------------------------------------- Service -----------------------------------------------
   
-  public void toast(String msg){
+  public void toast(String msg) {
     int duration = Toast.LENGTH_LONG;
     Toast toast = Toast.makeText(MainActivity.this, msg, duration);
     toast.show();
@@ -477,11 +441,11 @@ public class MainActivity extends Activity {
   
   public class WebAppInterface {
     Context mContext;
-
+    
     WebAppInterface(Context c) {
       mContext = c;
     }
-
+    
     @JavascriptInterface
     public void showToast(String toast) {
       Toast.makeText(mContext, toast, Toast.LENGTH_SHORT).show();
@@ -492,25 +456,17 @@ public class MainActivity extends Activity {
       return wvContent.getHeight();
     }
   }
-
+  
+  
 //----------------------------------------------- Other -----------------------------------------------
- 
-  void test(String verb){
+  
+  private void test(String verb) {
     verb = "and";
     Cursor cursor = db.getVerbsCursor(verb);
-    if(cursor != null){
-      System.out.println("setting adapter");
-      
-      SimpleCursorAdapter adapter = new SimpleCursorAdapter(
-            this,
-            android.R.layout.simple_list_item_1,
-            cursor,
-            new String[]{"verb"},
-            new int[]{android.R.id.text1},
-            0);
-      
+    if (cursor != null) {
+      SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, new String[] { "verb" }, new int[] { android.R.id.text1 }, 0);
       lvWords.setAdapter(adapter);
-    }    
+    }
   }
   
 }

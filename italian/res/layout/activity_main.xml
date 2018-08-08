@@ -22,16 +22,6 @@
             <!-- <requestFocus /> -->
         </EditText>
             
-            
-        <!-- <AutoCompleteTextView
-            android:id="@+id/etWord"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_weight="0.6"
-            android:inputType="text"
-            android:imeOptions="actionSearch"
-            android:selectAllOnFocus="true" />
-             -->
         <ImageButton
             android:id="@+id/bDown"
             android:layout_width="0dp"
@@ -47,12 +37,9 @@
             android:layout_weight="0.2"
             android:src="@drawable/ic_arrow_drop_up_black_48dp"
             android:text="Up" />
-
     </LinearLayout>
   
-  
-    <FrameLayout android:id="@+id/loContent" android:focusable="true" android:layout_width="fill_parent" android:layout_height="fill_parent">
-      
+    <FrameLayout android:id="@+id/loContent" android:focusable="true" android:layout_width="match_parent" android:layout_height="match_parent">
       <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" >
           <WebView
             android:id="@+id/wvContent"
@@ -67,7 +54,6 @@
               android:layout_height="wrap_content" >
           </ListView>
       </LinearLayout>
-      
     </FrameLayout>
     
 </LinearLayout>

@@ -2,31 +2,31 @@ package org.mortalis.verbconjugator.es;
 
 public class VerbItem {
 
-  String verb;
-  String impersonalForms;
+  public String verb;
+  public String impersonalForms;
 
-  String presentIndicative;
-  String preteritImperfectIndicative;
-  String preteritPerfectSimpleIndicative;
-  String futureIndicative;
-  String preteritPerfectIndicative;
-  String preteritPluperfectIndicative;
-  String preteritPreviuousIndicative;
-  String futurePerfectIndicative;
+  public String presentIndicative;
+  public String preteritImperfectIndicative;
+  public String preteritPerfectSimpleIndicative;
+  public String futureIndicative;
+  public String preteritPerfectIndicative;
+  public String preteritPluperfectIndicative;
+  public String preteritPreviuousIndicative;
+  public String futurePerfectIndicative;
 
-  String presentSubjunctive;
-  String preteritPerfectSubjunctive;
-  String preteritImperfectSubjunctive;
-  String preteritPluperfectSubjunctive;
-  String futureSubjunctive;
-  String futurePerfectSubjunctive;
+  public String presentSubjunctive;
+  public String preteritPerfectSubjunctive;
+  public String preteritImperfectSubjunctive;
+  public String preteritPluperfectSubjunctive;
+  public String futureSubjunctive;
+  public String futurePerfectSubjunctive;
 
-  String conditionalSimple;
-  String conditionalComplex;
+  public String conditionalSimple;
+  public String conditionalComplex;
 
-  String imperative;
-  String imperativeNegative;
+  public String imperative;
+  public String imperativeNegative;
 
-  String similarVerbs;
+  public String similarVerbs;
 
 }
