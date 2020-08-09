@@ -71,6 +71,20 @@ public class MainActivity extends AppCompatActivity {
     setActions();
   }
   
+  @Override
+  public void onBackPressed() {
+    try {
+      if (lvWords.getVisibility() == View.VISIBLE) {
+        hideList();
+        return;
+      }
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+    super.onBackPressed();
+  }
+  
   
 //----------------------------------------------- Actions -----------------------------------------------
   
@@ -103,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
     wvContent.addJavascriptInterface(new WebAppInterface(this), "Android");
     
     
-    cursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, null, new String[] { "verb" }, new int[] { android.R.id.text1 }, 0);
+    cursorAdapter = new SimpleCursorAdapter(this, R.layout.list_item, null, new String[] { "verb" }, new int[] { R.id.itemText }, 0);
     lvWords.setAdapter(cursorAdapter);
     lvWords.setBackgroundColor(Color.WHITE);
     
