@@ -6,6 +6,8 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
 
 public class DatabaseManager extends SQLiteAssetHelper {
   
@@ -41,8 +43,8 @@ public class DatabaseManager extends SQLiteAssetHelper {
   
   public Cursor getVerbsCursor(CharSequence text) {
     if (text == null) return null;
-    String sql = String.format("SELECT rowid _id, %s FROM %s WHERE %s LIKE '?%'", VERBS_COL_VERB, VERBS_TABLE_NAME, VERBS_COL_VERB);
-    Cursor cursor = db.rawQuery(sql, new String[] {text.toString()});
+    String sql = String.format("SELECT rowid _id, %s FROM %s WHERE %s LIKE ?", VERBS_COL_VERB, VERBS_TABLE_NAME, VERBS_COL_VERB);
+    Cursor cursor = db.rawQuery(sql, new String[] {text.toString() + "%"});
     return cursor;
   }
   

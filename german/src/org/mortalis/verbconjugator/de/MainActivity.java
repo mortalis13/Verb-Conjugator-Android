@@ -39,9 +39,11 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
+import android.support.v7.app.AppCompatActivity;
+
 
 @SuppressLint("NewApi")
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
   
   private DatabaseManager db;
   private SimpleCursorAdapter cursorAdapter;
@@ -58,7 +60,6 @@ public class MainActivity extends Activity {
   private FrameLayout loContent;
   
   private boolean textInnerChange;
-  private boolean useAutocomplete;
   
   
   @Override
@@ -70,25 +71,6 @@ public class MainActivity extends Activity {
     setActions();
   }
   
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.main, menu);
-    return true;
-  }
-  
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    int id = item.getItemId();
-    
-    switch (id) {
-    case R.id.action_autocomplete:
-      toggleAutocomplete(item);
-      return true;
-    }
-    
-    return super.onOptionsItemSelected(item);
-  }
-  
   
 //----------------------------------------------- Actions -----------------------------------------------
   
@@ -96,7 +78,6 @@ public class MainActivity extends Activity {
     db = new DatabaseManager(this);
     
     textInnerChange = false;
-    useAutocomplete = false;
     
     loContent = (FrameLayout) findViewById(R.id.loContent);
     
@@ -157,7 +138,6 @@ public class MainActivity extends Activity {
     
     etWord.addTextChangedListener(new TextWatcher() {
       public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (!useAutocomplete) return;
         if (textInnerChange) return;
         
         if (s.length() < 3) {
@@ -225,20 +205,6 @@ public class MainActivity extends Activity {
   
   private void searchVerb(String verb) {
     new SearchVerbTask().execute(verb);
-  }
-  
-  private void toggleAutocomplete(MenuItem menuItem) {
-    if (menuItem.isChecked()) {
-      menuItem.setChecked(false);
-      
-      useAutocomplete = false;
-      clearList();
-    }
-    else {
-      menuItem.setChecked(true);
-      
-      useAutocomplete = true;
-    }
   }
   
   
@@ -415,12 +381,10 @@ public class MainActivity extends Activity {
   }
   
   private void hideList() {
-    if (!useAutocomplete) return;
     lvWords.setVisibility(View.INVISIBLE);
   }
   
   private void showList() {
-    if (!useAutocomplete) return;
     lvWords.setVisibility(View.VISIBLE);
   }
   
