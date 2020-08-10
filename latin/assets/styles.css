@@ -23,7 +23,7 @@ td,th{
 .impForms td{
   vertical-align: middle;
   text-align: center;
-  border-width: 2px;
+  border-width: 1px;
 }
 
 .impersonal-forms-title, .tense, .mode{
@@ -32,7 +32,7 @@ td,th{
   padding-bottom: 10px;
 }
 .mode{
-  border-bottom-width: 2px;
+  border-bottom-width: 1px;
 }
 
 .form{

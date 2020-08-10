@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class DatabaseManager extends SQLiteAssetHelper {
   
-  private static final String DATABASE_NAME = "verbs_it.db";
+  private static final String DATABASE_NAME = "verbs_la.db";
   
   private static final String VERBS_TABLE_NAME = "verbs";
   
@@ -52,8 +52,8 @@ public class DatabaseManager extends SQLiteAssetHelper {
   
   public Cursor getVerbsCursor(CharSequence text) {
     if (text == null) return null;
-    String sql = String.format("SELECT rowid _id, %s FROM %s WHERE %s LIKE '?%'", VERBS_COL_VERB, VERBS_TABLE_NAME, VERBS_COL_VERB);
-    Cursor cursor = db.rawQuery(sql, new String[] { text.toString() });
+    String sql = String.format("SELECT rowid _id, %s FROM %s WHERE %s LIKE ?", VERBS_COL_VERB, VERBS_TABLE_NAME, VERBS_COL_VERB);
+    Cursor cursor = db.rawQuery(sql, new String[] {text.toString() + "%"});
     return cursor;
   }
   
