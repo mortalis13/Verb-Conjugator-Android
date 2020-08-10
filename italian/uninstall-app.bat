@@ -1,1 +1,1 @@
-adb uninstall org.mortalis.verbconjugator.it
+adb uninstall org.mortalis.ramstatus
