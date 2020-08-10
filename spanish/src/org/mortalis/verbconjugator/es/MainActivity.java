@@ -39,9 +39,11 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
+import android.support.v7.app.AppCompatActivity;
+
 
 @SuppressLint("NewApi")
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
   
   private DatabaseManager db;
   private SimpleCursorAdapter cursorAdapter;
@@ -58,7 +60,6 @@ public class MainActivity extends Activity {
   private FrameLayout loContent;
   
   private boolean textInnerChange;
-  private boolean useAutocomplete;
   
   
   @Override
@@ -71,22 +72,17 @@ public class MainActivity extends Activity {
   }
   
   @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.main, menu);
-    return true;
-  }
-  
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    int id = item.getItemId();
-    
-    switch (id) {
-    case R.id.action_autocomplete:
-      toggleAutocomplete(item);
-      return true;
+  public void onBackPressed() {
+    try {
+      if (lvWords.getVisibility() == View.VISIBLE) {
+        hideList();
+        return;
+      }
     }
-    
-    return super.onOptionsItemSelected(item);
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+    super.onBackPressed();
   }
   
   
@@ -96,7 +92,6 @@ public class MainActivity extends Activity {
     db = new DatabaseManager(this);
     
     textInnerChange = false;
-    useAutocomplete = false;
     
     loContent = (FrameLayout) findViewById(R.id.loContent);
     
@@ -121,7 +116,8 @@ public class MainActivity extends Activity {
     
     wvContent.addJavascriptInterface(new WebAppInterface(this), "Android");
     
-    cursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, null, new String[] { "verb" }, new int[] { android.R.id.text1 }, 0);
+    
+    cursorAdapter = new SimpleCursorAdapter(this, R.layout.list_item, null, new String[] { "verb" }, new int[] { R.id.itemText }, 0);
     lvWords.setAdapter(cursorAdapter);
     lvWords.setBackgroundColor(Color.WHITE);
     
@@ -156,9 +152,7 @@ public class MainActivity extends Activity {
     
     etWord.addTextChangedListener(new TextWatcher() {
       public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (!useAutocomplete) return;
         if (textInnerChange) return;
-        
         
         if (s.length() < 3) {
           clearList();
@@ -174,6 +168,7 @@ public class MainActivity extends Activity {
     
     
     lvWords.setOnItemClickListener(new OnItemClickListener() {
+      @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Cursor itemCursor = (Cursor) parent.getItemAtPosition(position);
         String verb = itemCursor.getString(1);
@@ -190,6 +185,7 @@ public class MainActivity extends Activity {
     
     
     bDown.setOnClickListener(new OnClickListener() {
+      @Override
       public void onClick(View v) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
           wvContent.evaluateJavascript("bDownClick();", null);
@@ -201,6 +197,7 @@ public class MainActivity extends Activity {
     });
     
     bUp.setOnClickListener(new OnClickListener() {
+      @Override
       public void onClick(View v) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
           wvContent.evaluateJavascript("bUpClick();", null);
@@ -222,19 +219,6 @@ public class MainActivity extends Activity {
   
   private void searchVerb(String verb) {
     new SearchVerbTask().execute(verb);
-  }
-  
-  private void toggleAutocomplete(MenuItem menuItem) {
-    if (menuItem.isChecked()) {
-      menuItem.setChecked(false);
-      
-      useAutocomplete = false;
-      clearList();
-    }
-    else {
-      menuItem.setChecked(true);
-      useAutocomplete = true;
-    }
   }
   
   
@@ -431,6 +415,7 @@ public class MainActivity extends Activity {
       
       return sb.toString();
     }
+    
   }
   
   
@@ -442,12 +427,10 @@ public class MainActivity extends Activity {
   }
   
   private void hideList() {
-    if (!useAutocomplete) return;
     lvWords.setVisibility(View.INVISIBLE);
   }
   
   private void showList() {
-    if (!useAutocomplete) return;
     lvWords.setVisibility(View.VISIBLE);
   }
   
@@ -483,6 +466,7 @@ public class MainActivity extends Activity {
       return wvContent.getHeight();
     }
   }
+  
   
 //----------------------------------------------- Other -----------------------------------------------
   
