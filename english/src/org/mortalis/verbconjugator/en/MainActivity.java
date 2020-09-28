@@ -105,6 +105,9 @@ public class MainActivity extends AppCompatActivity {
     
     WebSettings mWebSettings = wvContent.getSettings();
     mWebSettings.setJavaScriptEnabled(true);
+    mWebSettings.setSupportZoom(true);
+    mWebSettings.setDefaultFontSize(getResources().getInteger(R.integer.web_text_size));
+    
     wvContent.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
     wvContent.setScrollbarFadingEnabled(false);
     wvContent.setWebChromeClient(new WebChromeClient());
